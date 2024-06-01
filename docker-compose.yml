@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:16.3-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    restart: always
+  cachet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:8000
+    links:
+      - postgres:postgres
+    environment:
+      - DB_DRIVER=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=postgres
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_PREFIX=chq_
+      - APP_KEY=${APP_KEY:-null}
+      - APP_LOG=errorlog
+      - APP_ENV=${APP_ENV:-production}
+      - APP_DEBUG=true
+      - DEBUG=true
+      - CACHET_PATH="/"
+      - CACHET_DOMAIN=
+      - CACHET_TITLE="Status Page"
+    depends_on:
+      - postgres
+    restart: on-failure
