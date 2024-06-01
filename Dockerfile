@@ -10,8 +10,12 @@ CMD ["/sbin/entrypoint.sh"]
 ARG cachet_ver
 ARG archive_url
 
-ENV cachet_ver ${cachet_ver:-3.x}
-ENV archive_url ${archive_url:-https://github.com/cachethq/Cachet/archive/refs/heads/${cachet_ver}.tar.gz}
+#ENV cachet_ver ${cachet_ver:-3.x}
+#ENV archive_url ${archive_url:-https://github.com/cachethq/Cachet/archive/refs/heads/${cachet_ver}.tar.gz}
+
+ENV cachet_ver 3.x
+ENV archive_url ${archive_url:-https://github.com/cachethq/Cachet/archive/refs/heads/3.x.tar.gz}
+
 ENV COMPOSER_VERSION 2.7.6
 
 RUN apk add --no-cache --update nano
