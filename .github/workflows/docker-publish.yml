@@ -3,6 +3,7 @@ name: Docker
 on:
   push:
     tags: [ 'v*.*.*' ]
+    branches: [ main, test, feature/* ]
 
 env:
   REGISTRY: ghcr.io
@@ -92,8 +93,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            cachethq/docker:latest
-            cachethq/docker:${{steps.set_version.outputs.no-dash}}
+            monkeysoft/dockertryout:latest
+            monkeysoft/dockertryout:${{steps.set_version.outputs.no-dash}}
             ghcr.io/${{ steps.lower-repo.outputs.repository }}:latest
             ghcr.io/${{ steps.lower-repo.outputs.repository }}:${{steps.set_version.outputs.no-dash}}
           labels: ${{ steps.meta.outputs.labels }}
